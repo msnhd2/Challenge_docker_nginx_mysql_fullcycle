@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+
+  node:
+    build:
+      context: node
+    image: msnhd2/nodefullcycle:latest
+    entrypoint: dockerize -wait tcp://db:3306 -timeout 20s node index.js
+    container_name: node
+    tty: true
+    volumes:
+      - ./node:/usr/src/app
+    ports:
+      - "3000:3000"
+    networks:
+      - challengenet
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    command: --innodb-use-native-aio=0
+    container_name: db
+    restart: always
+    tty: true
+    volumes: 
+      - ./mysql:/var/lib/mysql/:rw
+      - ./init.sql:/docker-entrypoint-initdb.d/schema.sql
+    user: "501"
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+    environment: 
+      - MYSQL_DATABASE=nodedb
+      - MYSQL_ROOT_PASSWORD=root
+    networks: 
+      - challengenet
+
+  # nginx:
+  #   image: msnhd2/nginxfullcycle:latest
+  #   container_name: nginx
+  #   networks:
+  #     - challengenet
+  #   ports:
+  #     - "8080:80"
+  #   depends_on:
+  #     - node
+
+networks:
+  challengenet:
+    name: challengenet
+    driver: bridge
+
+
+
