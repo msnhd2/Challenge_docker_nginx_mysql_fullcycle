@@ -36,15 +36,15 @@ services:
     networks: 
       - challengenet
 
-  # nginx:
-  #   image: msnhd2/nginxfullcycle:latest
-  #   container_name: nginx
-  #   networks:
-  #     - challengenet
-  #   ports:
-  #     - "8080:80"
-  #   depends_on:
-  #     - node
+  nginx:
+    image: msnhd2/nginxfullcycle:latest
+    container_name: nginx
+    networks:
+      - challengenet
+    ports:
+      - "8080:80"
+    depends_on:
+      - node
 
 networks:
   challengenet:
