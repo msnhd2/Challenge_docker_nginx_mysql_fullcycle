@@ -1,0 +1,9 @@
+
+FROM mysql:5.7
+
+CMD [ "--innodb-use-native-aio=0" ]
+
+RUN mkdir -p /var/lib/mysql
+RUN chmod -R 777 /var/lib/mysql
+
+USER mysql

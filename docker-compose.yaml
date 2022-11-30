@@ -20,15 +20,17 @@ services:
       - db
 
   db:
-    image: mysql:5.7
-    command: --innodb-use-native-aio=0
+    #image: mysql:5.7
+    build:
+      context: .
+      dockerfile: Dockerfile.database
     container_name: db
     restart: always
     tty: true
     volumes: 
-      - ./mysql:/var/lib/mysql/:rw
+      - ./mysql:/var/lib/mysql/
       - ./init.sql:/docker-entrypoint-initdb.d/schema.sql
-    user: "501"
+    #user: "501"
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
     environment: 
@@ -51,6 +53,3 @@ networks:
   challengenet:
     name: challengenet
     driver: bridge
-
-
-
