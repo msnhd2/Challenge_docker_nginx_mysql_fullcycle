@@ -20,7 +20,6 @@ services:
       - db
 
   db:
-    #image: mysql:5.7
     build:
       context: .
       dockerfile: Dockerfile.database
@@ -30,7 +29,6 @@ services:
     volumes: 
       - ./mysql:/var/lib/mysql/
       - ./init.sql:/docker-entrypoint-initdb.d/schema.sql
-    #user: "501"
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
     environment: 
