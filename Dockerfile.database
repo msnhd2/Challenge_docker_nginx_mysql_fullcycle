@@ -6,4 +6,5 @@ CMD [ "--innodb-use-native-aio=0" ]
 RUN mkdir -p /var/lib/mysql
 RUN chmod -R 777 /var/lib/mysql
 
+RUN usermod -u 501 mysql
 USER mysql
